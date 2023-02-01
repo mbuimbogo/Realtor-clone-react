@@ -1,8 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye} from "react-icons/ai"
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth"
+import {toast} from "react-toastify"
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,7 +13,7 @@ export default function SignIn() {
     email:"",
     password:"",
   });
-
+    const navigate = useNavigate()
    const { email, password }  = formData
    
    function onChange(e){
@@ -18,7 +21,19 @@ export default function SignIn() {
       ...prevState, 
       [e.target.id]:e.target.value,
     }))
-    
+   }
+
+   async function onSubmit(e){
+    e.preventDefault()
+    try {
+      const auth = getAuth()
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      if(userCredential.user){
+        navigate("/")
+      }
+    } catch (error) {
+      toast.error("Wrong user credentials")
+    }
    }
   return (
     <section>
@@ -32,7 +47,7 @@ export default function SignIn() {
         </div>
 
         <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
-          <form>
+          <form onSubmit={onSubmit}>
               <input className=' mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out' 
                 type="text" id="email" 
                 value={email} 
