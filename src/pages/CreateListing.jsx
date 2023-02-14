@@ -2,11 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 
 
-
-
-
-
 const CreateListing = () => {
+    const [geoLocationEnabled, setGeoLocationEnabled] = useState(true)
 
     const [formData, setFormData] = useState({
         type:"rent",
@@ -20,8 +17,10 @@ const CreateListing = () => {
         offer: false,
         regularPrice:0,
         discountedPrice:0,
+        latitude: 0,
+        longitude:0,
     })
-    const { type, name, bedrooms, bathrooms, parking, furnished, address, description, offer, regularPrice, discountedPrice } = formData;
+    const { type, name, bedrooms, bathrooms, parking, furnished, address, description, offer, regularPrice, discountedPrice, latitude, longitude } = formData;
     
 
     
@@ -99,6 +98,20 @@ if(!e,target.files){
              <p className='text-lg mt-6 font-semibold'>Address</p>
              <textarea type="text" id='address' value={address} onChange={onChange} placeholder="Address" required className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6'
              />
+
+            {!geoLocationEnabled && (
+                <div className='flex space-x-6 justify-start mb-6'>
+                    <div>
+                    <p className='text-lg font-semibold'>Latitude</p>
+                    <input type="number" id="latitude" value ={latitude} onChange={onChange} required min="-90" max="90" className='w-full  px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:text-gray-700 focus:border-slate-600 text-center'/>
+                    </div>
+                    <div>
+                    <p className='text-lg font-semibold'>Longitude</p>
+                    <input type="number" id="longitude" value ={longitude} onChange={onChange} required min="-180" max = "180" className='w-full  px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:text-gray-700 focus:border-slate-600 text-center'/>
+                    </div>
+                </div>
+            )}
+
              <p className='text-lg font-semibold'>Description</p>
              <textarea type="text" id='description' value={description} onChange={onChange} placeholder="Address" required className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6'
              />
