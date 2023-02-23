@@ -46,7 +46,7 @@ if(e.target.value === "false"){
 }
 
 // files
-if(e.target.files){
+if(e.target.files){ 
     setFormData((prevState)=>({
         ...prevState,
         images:e.target.files,
@@ -140,6 +140,7 @@ if(+discountedPrice >= +regularPrice){ //convert to number using +
         toast.error("Images not uploaded");
         return;
       });
+      console.log('imgUrls:', imgUrls); // add this line
   
       const formDataCopy = {
         ...formData,
