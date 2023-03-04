@@ -50,7 +50,7 @@ const navigate = useNavigate()
     listings && (
         <>
         <Swiper 
-        slidesPreview={1}
+        slidesPerView={1}
         navigation
         pagination = {{type: "progressbar"}}
         effect="fade"
